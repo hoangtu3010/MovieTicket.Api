@@ -9,7 +9,8 @@
     {
         public int Id { get; set; }
         public string Name { set; get; }
-        public Image Image { get; set; }
+        public int ImageId { get; set; }
+        public virtual Image Image { get; set; }
         public decimal Price { get; set; }
         public TypeOptions Type { get; set; }
         public int Amount { get; set; }

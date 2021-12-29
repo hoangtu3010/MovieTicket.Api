@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieTicket.Api.Models
 {
-    public class SystemDbContext : DbContext
+    public class SystemDbContext : IdentityDbContext
     {
         public SystemDbContext(DbContextOptions<SystemDbContext> options) : base(options)
         {
@@ -24,6 +25,7 @@ namespace MovieTicket.Api.Models
         public DbSet<Food> Foods { get; set; }
         public DbSet<ComboFood> ComboFoods { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
     }
 }

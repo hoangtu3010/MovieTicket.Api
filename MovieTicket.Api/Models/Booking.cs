@@ -7,13 +7,16 @@ namespace MovieTicket.Api.Models
     public class ListFood
     {
         public int Id { get; set; }
-        public List<FoodInfo> Foods { get; set; }
-        public List<ComboInfo> ComboInfos { get; set; }
+        public int FoodId { get; set; }
+        public virtual List<FoodInfo> Foods { get; set; }
+        public int ComboInfoId { get; set; }
+        public virtual List<ComboInfo> ComboInfos { get; set; }
     }
     public class Booking
     {
         public int Id { get; set; }
-        public ListFood ListFood { get; set; }
+        public int ListFoodId { get; set; }
+        public virtual ListFood ListFood { get; set; }
         public decimal Total { get; set; }
         [DataType(DataType.Time)]
         public DateTime BookingDate { get; set; }

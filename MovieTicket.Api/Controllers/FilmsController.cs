@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ namespace MovieTicket.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FilmsController : ControllerBase
     {
         private readonly SystemDbContext _context;
@@ -24,7 +27,21 @@ namespace MovieTicket.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilms()
         {
-            return await _context.Films.ToListAsync();
+            var result = from film in _context.Films
+                         join image in _context.Images on film.ImageId equals image.id
+                         join category in _context.Categories on film.CategoryId equals category.Id
+                         select new
+                         {
+                             id = film.Id,
+                             image = image.fullPath,
+                             name = film.Name,
+                             trailer = film.Trailer,
+                             description = film.Description,
+                             rate = film.Rate,
+                             movieDuration = film.MovieDuration,
+                             category = category.Name
+                         };
+            return Ok(result);
         }
 
         // GET: api/Films/5
